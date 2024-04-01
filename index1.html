@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Activated Comment Box</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+    #comment-form {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+    input[type="text"],
+    textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+    input[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    input[type="submit"]:hover {
+        background-color: #45a049;
+    }
+</style>
+</head>
+<body>
+<div id="comment-form">
+    <h2>Leave a Comment</h2>
+    <form id="commentForm">
+        <input type="text" id="name" placeholder="Your Name" required>
+        <input type="email" id="email" placeholder="Your Email" required>
+        <textarea id="comment" rows="4" placeholder="Your Comment" required></textarea>
+        <input type="submit" value="Submit">
+    </form>
+</div>
+
+<script>
+    // Function to handle form submission
+    function submitComment(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        // Get form values
+        var name = document.getElementById('name').value;
+        var email = document.getElementById('email').value;
+        var comment = document.getElementById('comment').value;
+
+        // Create an object to represent the comment
+        var newComment = {
+            name: name,
+            email: email,
+            comment: comment
+        };
+
+        // Save the comment object to local storage
+        localStorage.setItem('comment', JSON.stringify(newComment));
+
+        // Clear form fields
+        document.getElementById('commentForm').reset();
+
+        // Optional: You can display a message or perform any other action after submitting the comment
+        alert('Thank you for your comment!');
+    }
+
+    // Add event listener for form submission
+    document.getElementById('commentForm').addEventListener('submit', submitComment);
+
+    // Retrieve comment from local storage (if exists) and populate form fields
+    var savedComment = localStorage.getItem('comment');
+    if (savedComment) {
+        savedComment = JSON.parse(savedComment);
+        document.getElementById('name').value = savedComment.name;
+        document.getElementById('email').value = savedComment.email;
+        document.getElementById('comment').value = savedComment.comment;
+    }
+</script>
+</body>
+</html>
